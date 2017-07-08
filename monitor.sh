@@ -1,5 +1,6 @@
 #!/bin/bash
-log=./monitor.log
+export CATALINA_HOME=/usr/local/tomcat-7
+log=$CATALINA_HOME/logs/monitor.log
 monitor(){
     url=http://localhost:8080/test
     success=$(curl -s -o /dev/null -m 10 -w %{http_code} ${url})
@@ -9,7 +10,7 @@ monitor(){
         echo "[INFO `date`] tomcat collapse"
         echo "[INFO `date`] restart tomcat"
         #excute the restart script
-        sudo ./restart.sh
+        $CATALINA_HOME/bin/restart.sh
     fi
 }
 monitor>>$log
