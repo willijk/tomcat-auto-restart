@@ -4,20 +4,27 @@ This is create to auto detect the tomcat process.If tomcat process collapsed, it
 
 # GET-START
 1. put the **restart.sh,monitor.sh** to the tomcat bin directory,like **CATALINA_HOME/bin**.Not force but recommended.
-2. install the cron on linux
+2. replace the url in monitor.sh to your test page url
+3. install the cron on linux
 ```shell
-yum install cron
+yum install vixie-cron
 ```
-3. create a timing task file to describe the timing task
+4. create a timing task file to describe the timing task
 ```shell
 touch task
 ```
-4. add description to **task**
+5. add description to **task**
 ```vim
 */1 * * * * /usr/local/tomcat/bin/monitor.sh
 ```
-5. start **cron** to execute the task
+6. start **cron** to execute the task(*more about cron type ```man cron``` on linux*)
 ```shell
+service crond start
 crontab task
 ```
-6. see the log at the ```CATALINA_HOME/logs/monitor.log```
+7. see the log at the ```CATALINA_HOME/logs/monitor.log```
+
+# ISSUE
+- Maybe you will occure the problem ^M bad interruption thing because I edit the sh file on windows,you can try below steps
+    1. ``` vim xxx.sh file```
+    2. ```set ff=unix ```
